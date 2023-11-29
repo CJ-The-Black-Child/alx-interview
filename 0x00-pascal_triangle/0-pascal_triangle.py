@@ -3,6 +3,7 @@
 This module handles the Pascal's implementation
 """
 
+
 def pascal_triangle(n):
     """
     Generates Pascal's triangle up to n rows.
@@ -11,14 +12,15 @@ def pascal_triangle(n):
         n (int):m The number of rows in Pascal's triangle to generate
 
     Returns:
-        list of lists: A lis of lists f integers representing Pascal's triangle up to n rows.
+        list of lists: A list of lists f integers representing
+                        Pascal's triangle up to n rows.
                         Returns an empty list if n <= 0.
     """
     res = []
     try:
         n = int(n)
     except ValueError:
-        return res 
+        return res
     if n <= 0:
         return res
     for i in range(n):
