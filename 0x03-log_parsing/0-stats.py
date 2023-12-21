@@ -17,19 +17,26 @@ status_codes = {
     str(code): 0 for code in [200, 301, 400, 401, 403, 404, 405, 500]
 }
 total_size = 0
+count = 0
 
 try:
-    for count, line in enumerate(sys.stdin, start=1):
+    for line in sys.stdin:
+        count += 1
         data = line.split()
         if len(data) < 2:
             continue
-        if data[-2] in status_codes:
-            status_codes[data[-2]] += 1
-        total_size += int(data[-1])
+        try:
+            if data[-2] in status_codes:
+                status_codes[data[-2]] += 1
+            total_size += int(data[-1])
+        except Exception:
+            pass
         if count % 10 == 0:
             print_status(status_codes, total_size)
+
 except KeyboardInterrupt:
     print_status(status_codes, total_size)
     raise
-finally:
-    print_status(status_codes, total_size)
+
+# Print the final status after all lines have been processed
+print_status(status_codes, total_size)
