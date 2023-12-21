@@ -23,8 +23,10 @@ try:
     for line in sys.stdin:
         if count != 0 and count % 10 == 0:
             print_status(status_codes, total_size)
+
         data = line.split()
         count += 1
+
         try:
             total_size += int(data[-1])
         except Exception:
@@ -34,10 +36,8 @@ try:
                 status_codes[data[-2]] += 1
         except Exception:
             pass
+    print_status(status_codes, total_size)
 
 except KeyboardInterrupt:
     print_status(status_codes, total_size)
     raise
-
-# Print the final status after all lines have been processed
-print_status(status_codes, total_size)
