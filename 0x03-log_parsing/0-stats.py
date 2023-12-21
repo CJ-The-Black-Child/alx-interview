@@ -12,7 +12,10 @@ def print_status(code_dict, total_size):
         if code_dict[code]:
             print(f"{code}: {code_dict[code]}")
 
-status_codes = {str(code): 0 for code in [200, 301, 400, 401, 403, 404, 405, 500]}
+
+status_codes = {
+    str(code): 0 for code in [200, 301, 400, 401, 403, 404, 405, 500]
+}
 total_size = 0
 
 try:
