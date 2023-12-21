@@ -21,18 +21,19 @@ count = 0
 
 try:
     for line in sys.stdin:
-        count += 1
+        if count != 0 and count % 10 == 0:
+            print_status(status_codes, total_size)
         data = line.split()
-        if len(data) < 2:
-            continue
+        count += 1
         try:
-            if data[-2] in status_codes:
-                status_codes[data[-2]] += 1
             total_size += int(data[-1])
         except Exception:
             pass
-        if count % 10 == 0:
-            print_status(status_codes, total_size)
+        try:
+            if data[-2] in status_codes:
+                status_codes[data[-2]] += 1
+        except Exception:
+            pass
 
 except KeyboardInterrupt:
     print_status(status_codes, total_size)
