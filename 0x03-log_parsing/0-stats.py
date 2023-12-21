@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Script that reads stdin line by line and computes metrics."""
 import sys
+import re
 
 
 def print_status(code_dict, total_size):
@@ -20,12 +21,12 @@ total_size = 0
 
 try:
     for count, line in enumerate(sys.stdin, start=1):
-        data = line.split()
-        if len(data) < 2:
-            continue
-        if data[-2] in status_codes:
-            status_codes[data[-2]] += 1
-        total_size += int(data[-1])
+        match = re.search(r'\"GET /projects/260 HTTP/1.1\" (\d+) (\d+)', line)
+        if match:
+            status_code, file_size = match.groups()
+            if status_code in status_codes:
+                status_codes[status_code] += 1
+            total_size += int(file_size)
         if count % 10 == 0:
             print_status(status_codes, total_size)
 except KeyboardInterrupt:
