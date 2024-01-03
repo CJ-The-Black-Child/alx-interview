@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """
-This script contains a function that checks if a list of integers represents a valid UTF-8 encoding.
+This script contains a function that checks if a list of integers
+represents a valid UTF-8 encoding.
 """
+
 
 def validUTF8(data):
     """
@@ -9,7 +11,7 @@ def validUTF8(data):
 
     Parameters:
     data (list): A list of integers representing bytes.
-    
+
     Returns:
     bool: True if data is a valid UTF-8 encoding, else False.
     """
@@ -25,12 +27,20 @@ def validUTF8(data):
             else:
                 return False
         elif data[i] & 0b11110000 == 0b11100000 and n - i >= 3:
-            if all(data[j] & 0b11000000 == 0b10000000 for j in range(i+1, i+3)):
+            if (
+                all(data[j] & 0b11000000 == 0b10000000 for j in range(
+                    i+1, i+3
+                    ))
+            ):
                 i += 3
             else:
                 return False
         elif data[i] & 0b11111000 == 0b11110000 and n - i >= 4:
-            if all(data[j] & 0b11000000 == 0b10000000 for j in range(i+1, i+4)):
+            if (
+                all(data[j] & 0b11000000 == 0b10000000 for j in range(
+                    i+1, i+4
+                    ))
+            ):
                 i += 4
             else:
                 return False
