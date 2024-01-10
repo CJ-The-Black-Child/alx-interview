@@ -26,7 +26,7 @@ class NQueen:
         for j in range(1, k):
             if self.x[j] == i or abs(self.x[j] - i) == abs(j - k):
                 return False
-            return True
+        return True
 
     def n_queen(self, k=1):
         """
