@@ -1,23 +1,26 @@
 #!/usr/bin/node
-const request = require('request');
+const request = require('request')
 
-function getCharacterName(url) {
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      const json = JSON.parse(body);
-      console.log(json.name);
+if (process.argv.length > 2) {
+  const movieId = process.argv[2];
+  const API_URL = `https://swapi.dev/api/films/${movieId}/`;
+
+  request(API_URL, (err, _, body) => {
+    if (err) {
+      console.error(err)
     }
-  });
+    const charactersURL = JSON.parse(body).characters
+    const charactersName = charactersURL.map(url => new Promise((resolve, reject) => {
+      request(url, (promiseErr, __, charactersReqBody) => {
+        if (promiseErr) {
+          reject(promiseErr)
+        }
+        resolve(JSON.parse(charactersReqBody).name)
+      })
+    }))
+
+    Promise.all(charactersName)
+      .then(names => console.log(names.join('\n')))
+      .catch(allErr => console.error(allErr))
+  })
 }
-
-const movieId = process.argv[2];
-const url = `https://swapi.dev/api/films/${movieId}/`;
-
-request(url, function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    const json = JSON.parse(body);
-    for (let i = 0; i < json.characters.length; i++) {
-      getCharacterName(json.characters[i]);
-    }
-  }
-});
