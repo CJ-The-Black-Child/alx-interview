@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 This module contains a function that calculates the fewest number of coins
-needed to meet a given amount total using a dynamic programming approach.
+needed to meet a given amount total using a greedy programming approach.
 """
 
 
@@ -11,8 +11,12 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    dp = [0] + [float('inf')] * total
+    coins.sort(reverse=True)
+    coin_count = 0
     for coin in coins:
-        for x in range(coin, total + 1):
-            dp[x%coin] = min(dp[x%coin], dp[(x - coin)%coin] + 1)
-    return dp[total%coin] if dp[total%coin] != float('inf') else -1
+        if total >= coin:
+            coin_count += total // coin
+            total %= coin
+        if total == 0:
+            return coin_count
+    return -1 if total != 0 else coin_count
