@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+The Prime Game - solve this custom Game using Prime numbers
+"""
+
 
 def isWinner(x, nums):
     """
@@ -30,13 +34,13 @@ def isWinner(x, nums):
                 primes[j - 1] = False
 
     # Compute prefix sums of the primes list for efficient lookup
-    # prefix_sums = [0]
-    # for i in range(1, n + 1):
-        # prefix_sums.append(prefix_sums[-1] + primes[i - 1])
+    prefix_sums = [0]
+    for i in range(1, n + 1):
+        prefix_sums.append(prefix_sums[-1] + primes[i - 1])
 
     # Count the primes for each round and update the players' scores
     for n in nums:
-        primes_count = sum(primes[0:n])
+        primes_count = prefix_sums[n]
         if primes_count % 2 == 0:
             bens_wins += 1
         else:
@@ -48,4 +52,4 @@ def isWinner(x, nums):
     elif marias_wins > bens_wins:
         return 'Maria'
     else:
-        return 'Ben'
+        return 'Ben_'
