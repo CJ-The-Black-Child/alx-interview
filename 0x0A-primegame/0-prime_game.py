@@ -3,6 +3,7 @@
 The Prime game - A game to find a winner using prime numbers
 '''
 
+
 def isWinner(x, nums):
     """
     Determines the winner of a game based on the number of prime numbers.
